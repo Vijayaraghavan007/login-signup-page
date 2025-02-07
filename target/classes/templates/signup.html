@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        @keyframes fadeBounce {
+            0% { opacity: 0; transform: translateY(-20px); }
+            50% { opacity: 0.5; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes glowing {
+            0% { box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url('ak1.jpg') no-repeat center center/cover;
+            margin: 0;
+            backdrop-filter: blur(50px);
+            transition: backdrop-filter 1s ease-out;
+        }
+
+        body.loaded { backdrop-filter: blur(0); }
+
+        .form-container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid rgb(210, 205, 216);
+            border-radius: 20px;
+            box-shadow: 0px 0px 5px 2px black;
+            width: 400px;
+            background: rgba(255, 255, 255, 0.7);
+            animation: fadeInScale 1.2s ease-in-out;
+        }
+
+        h1 {
+            background-color: rgb(255, 255, 255);
+            color: rgb(255, 0, 0);
+            border-radius: 20px;
+            width: 100px;
+            margin: 0 auto;
+            padding: 5px;
+            font-size: 20px;
+            text-align: center;
+            animation: glowing 1.5s infinite alternate;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            opacity: 0;
+            animation: fadeInScale 1s ease-in-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            background: linear-gradient(45deg, rgb(255, 0, 0), rgb(200, 0, 0));
+            color: white;
+            transition: 0.3s ease-in-out;
+            animation: fadeInScale 1s ease-in-out forwards;
+            animation-delay: 0.7s;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, rgb(250, 244, 62), rgb(255, 0, 0));
+            transform: scale(1.05);
+            animation: glowing 1.5s infinite alternate;
+        }
+
+        #error, #passwordMismatch {
+            color: red;
+            font-size: 14px;
+            text-align: left;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeInScale 1s ease-in-out forwards;
+            animation-delay: 0.8s;
+        }
+
+        /* Media Queries */
+        @media (max-width: 600px) {
+    .form-container {
+        width: 400px; /* Keeps the form-container size fixed */
+        padding: 15px;
+    }
+    input, button {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 400px) {
+    h1 {
+        font-size: 18px;
+        width: 80px;
+    }
+    button {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 350px) {
+    .form-container {
+        width: 400px; /* Prevents shrinking */
+        padding: 10px;
+    }
+    h1 {
+        font-size: 16px;
+        width: 70px;
+    }
+    input, button {
+        font-size: 12px;
+        padding: 8px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form id="signupForm" method="post" action="/add">
+            <h1>Signup</h1>
+            <input type="text" name="name" id="name" placeholder="Enter your Name" required>
+            <input type="email" name="email" id="email" placeholder="Enter your Email" required>
+            <input type="tel" name="phnum" id="phnum" placeholder="Enter your Phone Number" pattern="[0-9]{10}" required>
+            <input type="password" name="password" id="password" placeholder="Enter your Password" required>
+            <input type="password" name="repassword" id="repassword" placeholder="Re-enter your Password" required>
+            <p id="error"></p>
+            <p id="passwordMismatch"></p>
+            <button type="submit">Register</button>
+        </form>
+        <a href="login" class="login-link">Already have an account? Login</a>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $("body").addClass("loaded");
+            $("#signupForm").submit(function(event){
+                const password = $("#password").val();
+                const rePassword = $("#repassword").val();
+                
+                if (password !== rePassword) {
+                    $('#passwordMismatch').text('Passwords do not match.');
+                    event.preventDefault();
+                } else {
+                    $('#passwordMismatch').text('');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

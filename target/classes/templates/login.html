@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        @keyframes fadeBounce {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            50% {
+                opacity: 0.5;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes glowing {
+            0% { box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+        }
+
+		body {
+		    font-family: Arial, sans-serif;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    height: 100vh;
+		    background: url('akdrc.jpg') no-repeat center center/cover;
+		    margin: 0;
+		    backdrop-filter: blur(50px);  /* Initial blur effect */
+		    transition: backdrop-filter 1s ease-out; /* Transition for blur effect */
+		}
+
+		/* Optional: When the page content is fully loaded, the blur fades out */
+		body.loaded {
+		    backdrop-filter: blur(0);  /* Set blur to zero when the page loads */
+		}
+
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 320px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+           
+            animation: fadeInScale 1.2s ease-in-out;
+        }
+
+       
+
+		h2 {
+		    background-color: rgb(255, 255, 255);
+		    color: rgb(255, 10, 10);
+		    border-radius: 15px;
+		    width: 100px;
+		    padding: 5px;
+		    text-align: center;
+		    margin: 15px auto;
+		    box-shadow: 4px 2px 3px 6px rgba(255, 0, 0, 0.7);
+		    animation: glowingTitle 1.5s infinite alternate;
+		}
+
+		/* Glowing effect for h2 */
+		@keyframes glowingTitle {
+		    0% { box-shadow: 0 0 20px rgba(255, 251, 5, 0.7); }
+		    100% { box-shadow: 0 0 10px rgb(255, 79, 79); }
+		}
+
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: 0.3s ease;
+            opacity: 0;
+            animation: fadeInScale 1s ease-in-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        input[type="email"], input[type="password"] {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007BFF;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(45deg, rgb(255, 0, 0), rgb(200, 0, 0));
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+            animation: fadeInScale 1s ease-in-out forwards;
+            animation-delay: 0.7s;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, rgb(250, 244, 62), rgb(255, 0, 0));
+            transform: scale(1.05);
+            animation: glowing 1.5s infinite alternate;
+        }
+
+        #error {
+            color: red;
+            font-size: 14px;
+            margin-top: -5px;
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeInScale 1s ease-in-out forwards;
+            animation-delay: 0.8s;
+        }
+
+            /* For mobile devices */
+    @media (max-width: 600px) {
+        .login-container {
+            width: 90%;
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 18px;
+            width: 80px;
+        }
+
+        input, button {
+            font-size: 16px;
+            padding: 8px;
+        }
+    }
+
+    /* For tablets and small laptops (screen width 601px to 1024px) */
+    @media (max-width: 1024px) {
+        .login-container {
+            width: 80%;
+            padding: 30px;
+        }
+
+        h2 {
+            font-size: 20px;
+            width: 90px;
+        }
+
+        input, button {
+            font-size: 16px;
+            padding: 9px;
+        }
+    }
+
+    /* For desktop devices */
+    @media (min-width: 1025px) {
+        .login-container {
+            width: 400px;
+        }
+
+        h2 {
+            font-size: 24px;
+            width: 120px;
+        }
+
+        input, button {
+            font-size: 18px;
+            padding: 12px;
+        }
+    }
+        /* For devices below 350px */
+        @media (max-width: 350px) {
+        .login-container {
+            width: 95%; /* Make the container almost full width */
+            padding: 15px; /* Reduce padding to fit smaller screens */
+        }
+
+        h2 {
+            font-size: 16px; /* Smaller font size for the title */
+            width: 80px; /* Adjust width to fit smaller screen */
+        }
+
+        input, button {
+            font-size: 14px; /* Slightly smaller font size for inputs and buttons */
+            padding: 7px; /* Reduced padding for smaller screen elements */
+        }
+
+        #error {
+            font-size: 12px; /* Smaller font size for error messages */
+        }
+    }
+
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <form action="/log">
+            
+            <h2>Login</h2>
+            <input type="email" name="email" id="loginEmail" placeholder="Enter your email" required>
+            <input type="password" name="password" id="loginPassword" placeholder="Enter your password" required>
+            <p id="error"></p>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    
+    <script>
+$(document).ready(function () {
+    // Remove blur effect after page load
+    setTimeout(function () {
+        $("body").addClass("loaded");
+    }, 600); // Delay to show transition
+
+    $("#log").submit(function (event) {
+        event.preventDefault();
+
+        const email = $("#loginEmail").val().trim();
+        const password = $("#loginPassword").val().trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/;
+
+        if (!emailRegex.test(email)) {
+            $("#error").text("Please enter a valid email (e.g., user@example.com).").fadeIn();
+            return;
+        }
+        if (!passwordRegex.test(password)) {
+            $("#error").text("Password must be at least 8 characters with uppercase, lowercase, and a number.").fadeIn();
+            return;
+        }
+
+        $("#error").text("").fadeOut();
+        alert("Login successful!");
+    });
+});
+    </script>
+</body>
+</html>
